@@ -1,7 +1,7 @@
 OBJS = *.cpp
 INCLUDES = *.hpp
 CC = g++
-COMPILER_FLAGS = -g -std=c++17
+COMPILER_FLAGS = -g -std=c++17 -Wall -Wextra -pedantic-errors
 LINKER_FLAGS =
 OBJ_NAME = bj
 

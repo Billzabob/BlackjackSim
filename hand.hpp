@@ -1,20 +1,23 @@
 #pragma once
 
+#include <cstddef>  // size_t
 #include <vector>
 
 class Hand {
  public:
-  int score() const;
+  unsigned int score() const;
   void clear();
-  void operator<<(int card);
-  int operator[](int i) const;
-  bool operator==(int score) const;
-  bool operator<(int score) const;
-  bool operator>(int score) const;
+  bool soft() const;
+  unsigned int numCards() const;
+  void operator<<(unsigned int card);
+  unsigned int operator[](size_t i) const;
+  bool operator==(unsigned int score) const;
+  bool operator<(unsigned int score) const;
+  bool operator>(unsigned int score) const;
   bool operator==(const Hand& hand) const;
   bool operator<(const Hand& hand) const;
   bool operator>(const Hand& hand) const;
 
  private:
-  std::vector<int> hand;
+  std::vector<unsigned int> hand;
 };

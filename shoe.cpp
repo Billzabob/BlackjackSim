@@ -4,18 +4,18 @@ using namespace std;
 
 struct EmptyDeck {};
 
-Shoe::Shoe(int decks)
+Shoe::Shoe(unsigned int decks)
     : decks(decks), cardCount(decks * 52), gen(random_device()()) {
   reset();
 }
 
-int Shoe::drawCard() {
-  if (cardCount <= 0) {
+unsigned int Shoe::drawCard() {
+  if (cardCount == 0) {
     throw EmptyDeck();
   }
   size_t randomIndex = dis(gen) % cardCount;
-  int total = 0;
-  int card = 0;
+  unsigned int total = 0;
+  unsigned int card = 0;
   for (size_t i = 1; i <= 10; ++i) {
     total += cards[i];
     if (total > randomIndex) {
@@ -33,4 +33,7 @@ void Shoe::reset() {
     cards[i] = 4 * decks;
   }
   cards[10] = 16 * decks;
+  cardCount = 52 * decks;
 }
+
+unsigned int Shoe::getCardCount() const { return cardCount; }

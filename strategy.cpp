@@ -5,21 +5,21 @@
 
 using namespace std;
 
-int Strategy::bet() {
+unsigned int Strategy::bet() const {
   cout << "Bet amount:" << endl;
-  int bet;
+  unsigned int bet;
   cin >> bet;
   return bet;
 }
 
-bool Strategy::takeInsurance() {
+bool Strategy::takeInsurance() const {
   cout << "Bet insurance?" << endl;
   bool bet;
   cin >> bet;
   return bet;
 }
 
-Strategy::playChoice Strategy::choosePlay() {
+Strategy::playChoice Strategy::choosePlay() const {
   cout << "Play choice:" << endl;
   string playString;
   cin >> playString;

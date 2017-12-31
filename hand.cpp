@@ -2,9 +2,9 @@
 
 using namespace std;
 
-int Hand::score() const {
-  int score = 0;
-  int aces = 0;
+unsigned int Hand::score() const {
+  unsigned int score = 0;
+  unsigned int aces = 0;
   for (const auto& card : hand) {
     score += card;
     if (card == 1) aces++;
@@ -18,15 +18,21 @@ int Hand::score() const {
 
 void Hand::clear() { hand.clear(); }
 
-void Hand::operator<<(int card) { hand.push_back(card); }
+bool Hand::soft() const { return score() == (score() + 10); }
 
-int Hand::operator[](int i) const { return hand[i]; }
+unsigned int Hand::numCards() const { return hand.size(); }
 
-bool Hand::operator==(int score) const { return this->score() == score; }
+void Hand::operator<<(unsigned int card) { hand.push_back(card); }
 
-bool Hand::operator<(int score) const { return this->score() < score; }
+unsigned int Hand::operator[](size_t i) const { return hand.at(i); }
 
-bool Hand::operator>(int score) const { return this->score() > score; }
+bool Hand::operator==(unsigned int score) const {
+  return this->score() == score;
+}
+
+bool Hand::operator<(unsigned int score) const { return this->score() < score; }
+
+bool Hand::operator>(unsigned int score) const { return this->score() > score; }
 
 bool Hand::operator==(const Hand& hand) const {
   return score() == hand.score();

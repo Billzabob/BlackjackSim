@@ -2,21 +2,22 @@
 
 #include <array>
 #include <random>
-#include <vector>
 
 class Shoe {
  public:
-  explicit Shoe(int decks);
+  explicit Shoe(unsigned int decks);
 
-  int drawCard();
+  unsigned int drawCard();
 
   void reset();
 
+  unsigned int getCardCount() const;
+
  private:
-  const int decks;
+  const unsigned int decks;
   std::array<int, 11> cards;
-  int cardCount;
+  unsigned int cardCount;
   // RNG
   std::mt19937 gen;
-  std::uniform_int_distribution<int> dis;
+  std::uniform_int_distribution<unsigned int> dis;
 };
