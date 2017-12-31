@@ -13,8 +13,6 @@ void Game::play() {
 }
 
 void Game::playHand() {
-  cout << "Player money: " << playerMoney << endl;
-
   int bet = strat.bet();
 
   if (bet % 2 != 0) {
@@ -44,16 +42,16 @@ void Game::playHand() {
 
   // Check for dealer blackjack with insurance.
   if (dealerHand[1] == 1) {
-    bool takeInsurance = strat.takeInsurance();
-    int insuranceBet = bet / 2;
+    int insuranceBet = 0;
+    if (strat.takeInsurance()) {
+      insuranceBet = bet / 2;
+    }
     playerMoney -= insuranceBet;
 
     if (dealerHand[0] == 10) {
       cout << "Dealer had blackjack" << endl;
       dealerBlackjack = true;
-      if (takeInsurance) {
-        playerMoney += insuranceBet * 2;
-      }
+      playerMoney += insuranceBet * 2;
     } else {
       cout << "Dealer did not have blackjack" << endl;
     }
@@ -64,21 +62,15 @@ void Game::playHand() {
     cout << "Player had blackjack" << endl;
     if (dealerBlackjack) {
       cout << "But so did the dealer, push" << endl;
-      playerMoney += bet;
-      return;
     } else {
-      playerMoney += (bet / 2) * 3;
-      return;
+      playerMoney += bet / 2;
     }
-  } else if (dealerBlackjack) {
-    // Dealer had blackjack but you didn't.
-    return;
   }
 
   // Player does his plays.
   Strategy::playChoice choice;
-  bool done = false;
-  do {
+  bool done = dealerBlackjack;
+  while (playerHand < 21 && !done) {
     choice = strat.choosePlay();
     int card;
     switch (choice) {
@@ -113,7 +105,7 @@ void Game::playHand() {
         done = true;
         break;
     }
-  } while (playerHand < 21 && !done);
+  }
 
   // Check who won.
   while (dealerHand < 17) {
@@ -143,6 +135,8 @@ void Game::playHand() {
       playerMoney += bet * 2;
     }
   }
+
+  cout << "Player money: " << playerMoney << endl << endl;
 
   playerHand.clear();
   dealerHand.clear();
